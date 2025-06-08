@@ -18,7 +18,9 @@ admin_router = APIRouter(
 
 @admin_router.post("/create_post/")
 async def create_post(
-    data: SPost, session: AsyncSession = Depends(get_async_session), is_auth: UserModel = Depends(check_auth_user)
+    data: SPost,
+    session: AsyncSession = Depends(get_async_session),
+    is_auth: UserModel = Depends(check_auth_user),
 ) -> dict:
     if not is_auth:
         return {"status_code": 401, "info": "User unauthorized"}
@@ -28,7 +30,9 @@ async def create_post(
         return {"status_code": 409, "info": "Post is exists"}
 
     new_post = PostModel(
-        header=data.header, text=data.text, created_at=datetime.datetime.now(datetime.timezone.utc)
+        header=data.header,
+        text=data.text,
+        created_at=datetime.datetime.now(datetime.timezone.utc),
     )
     session.add(new_post)
     await session.commit()
@@ -38,7 +42,10 @@ async def create_post(
 
 @admin_router.patch("/update_post/{post_id}")
 async def update_post(
-    post_id: int, data: SUpdatePost, session: AsyncSession = Depends(get_async_session), is_auth: UserModel = Depends(check_auth_user)
+    post_id: int,
+    data: SUpdatePost,
+    session: AsyncSession = Depends(get_async_session),
+    is_auth: UserModel = Depends(check_auth_user),
 ) -> dict:
     if not is_auth:
         return {"status_code": 401, "info": "User unauthorized"}
@@ -57,7 +64,9 @@ async def update_post(
 
 @admin_router.delete("/delete_post/{post_id}")
 async def delete_post(
-    post_id: int, session: AsyncSession = Depends(get_async_session), is_auth: UserModel = Depends(check_auth_user)
+    post_id: int,
+    session: AsyncSession = Depends(get_async_session),
+    is_auth: UserModel = Depends(check_auth_user),
 ) -> dict:
     if not is_auth:
         return {"status_code": 401, "info": "User unauthorized"}

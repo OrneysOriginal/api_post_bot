@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String
 
 
 class UserModel(Base):
-    __tablename__ = 'user_db'
+    __tablename__ = "user_db"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True)
